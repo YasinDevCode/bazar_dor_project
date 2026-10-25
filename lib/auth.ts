@@ -8,12 +8,12 @@ const databasePath =
   path.join(process.cwd(), "data", "auth.sqlite");
 const secret =
   process.env.BETTER_AUTH_SECRET ??
-  (process.env.NODE_ENV === "production"
-    ? undefined
-    : "local-development-secret-do-not-use-in-production");
+  "bazar-dor-default-dev-secret-change-in-production";
 
-if (!secret) {
-  throw new Error("BETTER_AUTH_SECRET must be set in production.");
+if (!process.env.BETTER_AUTH_SECRET) {
+  console.warn(
+    "BETTER_AUTH_SECRET is not set. Falling back to a local default secret.",
+  );
 }
 
 mkdirSync(path.dirname(databasePath), { recursive: true });

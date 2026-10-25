@@ -1,65 +1,35 @@
-<div align="center">
+# বাজার দর
 
-# 🛒 বাজার দর · BazarDor
+## Local development
 
-বাংলাদেশের নিত্যপ্রয়োজনীয় পণ্যের দাম, বাজারভিত্তিক তুলনা ও দৈনিক মূল্য-পরিবর্তন এক জায়গায়।
+1. Install dependencies with `npm install`.
+2. Copy `.env.example` to `.env.local` and set `BETTER_AUTH_SECRET` to a
+   random secret of at least 32 characters. `BETTER_AUTH_URL` should match the
+   app's origin.
+3. Create the SQLite auth tables with `npm run auth:migrate`.
+4. Start Next.js with `npm run dev`.
 
-</div>
+The default database is `./data/auth.sqlite`. Set `AUTH_DATABASE_PATH` to
+change it. Keep the SQLite file on persistent storage in deployments; ephemeral
+serverless filesystems do not preserve accounts or sessions.
 
-## ✨ প্রধান বৈশিষ্ট্য
-
-1. **লাইভ বাজারদর** — একাধিক API source থেকে পণ্যের বর্তমান দাম, আগের দিনের পরিবর্তন ও বাজারভিত্তিক সর্বনিম্ন/সর্বোচ্চ দাম।
-2. **পণ্য খোঁজা ও সাজানো** — ক্যাটাগরি অনুযায়ী পণ্য দেখা এবং দাম কম থেকে বেশি বা বেশি থেকে কম সাজানো।
-3. **বিস্তারিত পণ্য পৃষ্ঠা** — পণ্যের গড়/সর্বনিম্ন/সর্বোচ্চ দাম এবং বিভিন্ন বাজারের দাম একসঙ্গে দেখা।
-4. **দৈনিক মূল্য ticker** — বাংলা সংখ্যায় দাম ও ঊর্ধ্ব/নিম্নমুখী পরিবর্তনের চলমান ticker।
-5. **ব্যবহারকারী অ্যাকাউন্ট** — Better Auth-ভিত্তিক email/password নিবন্ধন ও sign-in, ঐচ্ছিক Google/GitHub OAuth, profile দেখা ও নাম হালনাগাদ।
-
-## 🧰 প্রযুক্তি
-
-- Next.js 16 App Router, React 19, TypeScript
-- Tailwind CSS 4, Lucide React, Sonner
-- Better Auth 1.7 with SQLite (`better-sqlite3`)
-- Programming Hero Bazar Dor API with two fallback API sources
-
-## 🚀 Local setup
-
-প্রয়োজন: Node.js 22+ এবং npm।
-
-```bash
-npm install
-Copy-Item .env.example .env.local
-```
-
-`.env.local`-এ `BETTER_AUTH_SECRET`-কে কমপক্ষে ৩২ অক্ষরের একটি গোপন random value দিয়ে বদলান। `BETTER_AUTH_URL` local app origin (`http://localhost:3000`) হতে হবে।
-
-```bash
-npm run auth:migrate
-npm run dev
-```
-
-তারপর [http://localhost:3000](http://localhost:3000) খুলুন। SQLite database ডিফল্টভাবে `./data/auth.sqlite`-এ তৈরি হয়; `AUTH_DATABASE_PATH` দিয়ে এর অবস্থান পরিবর্তন করা যায়। Production deployment-এ persistent disk ব্যবহার করুন—ephemeral serverless filesystem-এ account/session সংরক্ষিত থাকবে না।
-
-### Social sign-in (optional)
-
-Google বা GitHub console থেকে OAuth client তৈরি করে `.env.local`-এ সংশ্লিষ্ট client ID ও secret দিন:
-
-```env
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-GITHUB_CLIENT_ID=
-GITHUB_CLIENT_SECRET=
-```
-
-Local callback URL:
+Email/password sign-in and registration are enabled. Google and GitHub
+sign-in are enabled when their client ID and secret are set in `.env.local`.
+Configure these callback URLs in the OAuth provider consoles:
 
 - Google: `http://localhost:3000/api/auth/callback/google`
 - GitHub: `http://localhost:3000/api/auth/callback/github`
 
-Production-এ `BETTER_AUTH_URL` ও OAuth callback URL-এ deployed origin ব্যবহার করুন। `.env.local`, database file বা OAuth secret commit করবেন না। Production build/run-এর আগে deployment environment-এ `BETTER_AUTH_SECRET` সেট করুন।
+For a deployed site, use the deployed origin in `BETTER_AUTH_URL` and register
+the corresponding deployed callback URLs with the providers. Do not commit
+`.env.local` or OAuth secrets. Set `BETTER_AUTH_SECRET` in the deployment
+environment before building and running the production app.
 
-## 🧪 যাচাই
+## Build and lint
 
 ```bash
 npm run lint
 npm run build
 ```
+
+# bazar_dor_project
